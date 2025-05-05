@@ -137,6 +137,32 @@ public class Board extends JPanel {
         }
     }
 
+    public void giveHint() {
+        if (!inGame) {
+            statusbar.setText("Game is not active");
+            return;
+        }
+    
+        for (int i = 0; i < all_cells; i++) {
+            // Trouver une cellule non minée et non découverte
+            if (field[i] == COVER_FOR_CELL) {
+                int row = i / cols;
+                int col = i % cols;
+    
+                // Révéler la cellule
+                field[i] -= COVER_FOR_CELL;
+    
+                // Mettre à jour le statut
+                statusbar.setText("Hint: Cell at (" + row + ", " + col + ") is safe.");
+                repaint();
+                return;
+            }
+        }
+    
+        // Si aucune cellule sûre n'est trouvée
+        statusbar.setText("No hints available.");
+    }
+
 
     public void find_empty_cells(int j) {
 
